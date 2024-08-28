@@ -5,7 +5,7 @@ from django.utils import timezone
 class VenueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Venue
-        fields = ['id', 'name', 'location', 'capacity', 'created_at', 'updated_at']
+        fields = "__all__"
 
 
 class SeatSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class SeatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Seat
-        fields = ['id', 'venue', 'venue_name', 'seat_number', 'type', 'price', 'is_booked', 'created_at', 'updated_at']
+        fields = "__all__"
 
     def validate(self, data):
         venue = data.get('venue')
@@ -27,11 +27,11 @@ class SeatSerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    seat_details = SeatSerializer(source='seat', read_only=True)
+    seat = SeatSerializer()
 
     class Meta:
         model = Booking
-        fields = ['id', 'seat', 'seat_details', 'customer_name', 'phone', 'email', 'event_date', 'event_time', 'created_at', 'updated_at']
+        fields = "__all__"
 
     def validate(self, data):
         """

@@ -1,8 +1,9 @@
 import pytest
 from django.urls import reverse
 from rest_framework import status
-from core.models import Venue, Seat, Booking
 from rest_framework.test import APIClient
+
+from core.models import Venue, Seat, Booking
 
 @pytest.fixture
 def api_client():

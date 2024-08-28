@@ -23,7 +23,7 @@ class SeatType(models.IntegerChoices):
 
 class Seat(BaseModel):
     venue = models.ForeignKey(Venue, related_name='seats', on_delete=models.CASCADE)
-    seat_number = models.CharField(max_length=10, unique=True)
+    seat_number = models.CharField(max_length=10)
     type = models.PositiveBigIntegerField(choices=SeatType.choices, default=SeatType.REGULAR)
     price = models.FloatField()
     is_booked = models.BooleanField(default=False)

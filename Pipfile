@@ -8,7 +8,6 @@ django = "*"
 djangorestframework = "*"
 faker = "*"
 psycopg2 = "*"
-python-dotenv = "*"
 
 [dev-packages]
 pytest = "*"
