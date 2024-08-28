@@ -50,3 +50,10 @@ python manage.py runserver
 ```
 
 The server will start, and you can access your Django application by navigating to `http://localhost:8000` in your web browser.
+
+
+## Run Test codes
+
+```bash
+pytest -v
+```

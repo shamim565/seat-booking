@@ -46,11 +46,11 @@ class BookingSerializer(serializers.ModelSerializer):
         if event_date < timezone.now().date() or (
             event_date == timezone.now().date() and event_time < timezone.now().time()
         ):
-            raise serializers.ValidationError("Event date and time must be in the future.")
+            raise serializers.ValidationError({"event_time" : "Event date and time must be in the future."})
 
         # Ensure the seat isn't already booked
         if seat.is_booked:
-            raise serializers.ValidationError(f"Seat {seat.seat_number} is already booked.")
+            raise serializers.ValidationError({"seat" : f"Seat {seat.seat_number} is already booked."})
 
         return data
 
