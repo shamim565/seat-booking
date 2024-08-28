@@ -26,7 +26,6 @@ class SeatSerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    seat_details = SeatSerializer( source='seat', read_only=True)
     
     class Meta:
         model = Booking
@@ -61,3 +60,8 @@ class BookingSerializer(serializers.ModelSerializer):
         seat.is_booked = True
         seat.save()
         return super().create(validated_data)
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['seat'] = SeatSerializer(instance.seat).data
+        return data
