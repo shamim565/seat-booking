@@ -3,7 +3,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import Venue, Seat, Booking
+from core.models import Venue, Seat, Booking, SeatType
 
 @pytest.fixture
 def api_client():
@@ -15,7 +15,7 @@ def venue():
 
 @pytest.fixture
 def seat(venue):
-    return Seat.objects.create(venue=venue, seat_number="A1", type=0, price=50.0)
+    return Seat.objects.create(venue=venue, seat_number="A1", type=SeatType.REGULAR, price=50.0)
 
 @pytest.fixture
 def booking(seat):
@@ -84,7 +84,7 @@ def test_delete_venue(api_client, venue):
 @pytest.mark.django_db
 def test_create_seat(api_client, venue):
     url = reverse('seats-list')
-    data = {"venue": venue.id, "seat_number": "A2", "type": 0, "price": 50.0}
+    data = {"venue": venue.id, "seat_number": "A2", "type": SeatType.REGULAR, "price": 50.0}
     response = api_client.post(url, data, format='json')
     assert response.status_code == status.HTTP_201_CREATED
     assert Seat.objects.count() == 1
@@ -93,10 +93,10 @@ def test_create_seat(api_client, venue):
 @pytest.mark.django_db
 def test_create_seat_exceeds_venue_capacity(api_client, venue):
     for i in range(venue.capacity):
-        Seat.objects.create(venue=venue, seat_number=f"A{i+1}", type=0, price=50.0)
+        Seat.objects.create(venue=venue, seat_number=f"A{i+1}", type=SeatType.REGULAR, price=50.0)
     
     url = reverse('seats-list')
-    data = {"venue": venue.id, "seat_number": "A101", "type": 0, "price": 50.0}
+    data = {"venue": venue.id, "seat_number": "A101", "type": SeatType.REGULAR, "price": 50.0}
     response = api_client.post(url, data, format='json')
     
     assert response.status_code == status.HTTP_400_BAD_REQUEST

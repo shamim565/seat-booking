@@ -19,7 +19,7 @@ Once activated, your terminal prompt should indicate the active virtual environm
 Install project dependencies specified in the `pipfile` file:
 
 ```bash
-pipenv install
+pipenv install --dev
 ```
 This ensures that your project has all the necessary packages installed.
 

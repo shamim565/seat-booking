@@ -22,13 +22,12 @@ class SeatSerializer(serializers.ModelSerializer):
         if total_venue >= venue.capacity:
             raise serializers.ValidationError({"venue" : "Maximum venue capacity has exceeded."})
         
-        return data
-            
+        return data         
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    seat = SeatSerializer()
-
+    seat_details = SeatSerializer( source='seat', read_only=True)
+    
     class Meta:
         model = Booking
         fields = "__all__"
